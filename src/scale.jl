@@ -117,6 +117,12 @@ end
 
 const sqrt_transform = ContinuousScaleTransform(sqrt, x -> x^2, sqrt_formatter)
 
+function rad_formatter(xs::AbstractArray, format=:plain)
+    [@sprintf("%sπ", x) for x in showoff(xs, format)]
+end
+
+const rad_transform =
+    ContinuousScaleTransform(x -> x/π, x -> x*π, rad_formatter)
 
 # Continuous scale maps data on a continuous scale simple by calling
 # `convert(Float64, ...)`.
@@ -191,6 +197,8 @@ const x_asinh      = continuous_scale_partial(x_vars, asinh_transform)
 const y_asinh      = continuous_scale_partial(y_vars, asinh_transform)
 const x_sqrt       = continuous_scale_partial(x_vars, sqrt_transform)
 const y_sqrt       = continuous_scale_partial(y_vars, sqrt_transform)
+const x_rad       = continuous_scale_partial(x_vars, rad_transform)
+const y_rad       = continuous_scale_partial(y_vars, rad_transform)
 
 const size_continuous = continuous_scale_partial([:size], identity_transform)
 
@@ -825,4 +833,3 @@ end
 
 
 end # module Scale
-
